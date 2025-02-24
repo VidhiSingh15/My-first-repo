@@ -2,12 +2,11 @@ from flask import Flask, render_template, request, session
 import random
 
 app = Flask(__name__)
-app.secret_key = 'guessing_game_secret'  # Secret key for session management
+app.secret_key = 'guessing_game_secret' 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     try:
-        # Initialize session variables
         if 'number' not in session:
             session['number'] = random.randint(1, 100)
             session['attempts'] = 0
@@ -27,7 +26,7 @@ def index():
                     message = "🔼 Too high! Try again."
                 else:
                     message = f"🎉 Correct! You guessed it in {session['attempts']} attempts!"
-                    session.pop('number')  # Reset game
+                    session.pop('number')  
                     session.pop('attempts')
 
             else:
@@ -36,7 +35,7 @@ def index():
         return render_template('index.html', message=message)
 
     except Exception as e:
-        return f"⚠️ Error: {str(e)}", 500  # Display error message if something fails
+        return f"⚠️ Error: {str(e)}", 500 
 
 if __name__ == '__main__':
     app.run(debug=True)
